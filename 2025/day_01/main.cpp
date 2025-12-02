@@ -15,14 +15,26 @@ int main() {
         string direction = instruction.substr(0, 1);
         int rotation = stoi(instruction.substr(1));
         if (direction == "L") {
-            currentNum -= rotation;
+            for (int i = 0; i < rotation; i++) {
+                currentNum--;
+                if (currentNum < 0) {
+                    currentNum = 99;
+                }
+                if (currentNum == 0) {
+                    code++;
+                }
+            }
         }
         else {
-            currentNum += rotation;
-        }
-        currentNum = currentNum % 100;
-        if (currentNum == 0) {
-            code++;
+            for (int i = 0; i < rotation; i++) {
+                currentNum++;
+                if (currentNum > 99) {
+                    currentNum = 0;
+                }
+                if (currentNum == 0) {
+                    code++;
+                }
+            }
         }
     }
     cout << code;
