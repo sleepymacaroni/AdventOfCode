@@ -5,7 +5,7 @@
 
 using namespace std;
 
-bool accessible(int row, int column, const vector<vector<int>>& grid) {
+bool accessible(int row, int column, vector<vector<int>>& grid) {
     int numEmpty = 0;
     //check if each adjacent space is empty
     if (row-1 < 0 || grid[row-1][column] == 0) {
@@ -33,6 +33,7 @@ bool accessible(int row, int column, const vector<vector<int>>& grid) {
         numEmpty++;
     }
     if (numEmpty > 4) {
+        grid[row][column] = 0;
         return true;
     }
     return false;
@@ -61,10 +62,15 @@ int main() {
         row++;
     }
 
-    for (int r = 0; r < row; r++) {
-        for (int c = 0; c < column; c++) {
-            if (paperGrid[r][c] == 1 && accessible(r, c, paperGrid)) {
-                count++;
+    int changes = 1;
+    while(changes > 0) {
+        changes = 0;
+        for (int r = 0; r < row; r++) {
+            for (int c = 0; c < column; c++) {
+                if (paperGrid[r][c] == 1 && accessible(r, c, paperGrid)) {
+                    count++;
+                    changes++;
+                }
             }
         }
     }
